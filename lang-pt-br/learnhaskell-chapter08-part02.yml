@@ -12,31 +12,29 @@ Isto é legal, apesar de ser muito legível. E se nós quisessemos criar uma fun
 
 
 
-
-Whew! I certainly did not enjoy writing that! Despite being very cumbersome and BORING to write, this method works.
-
-
-
-There must be a better way, you say! Well no, there isn't, sorry.
-
-Just kidding, there is. Hahaha! The makers of Haskell were very smart and anticipated this scenario. They included an alternative way to write data types. Here's how we could achieve the above functionality with record syntax.
+Nossa! Eu certamente não gostaria de escrever isto! Além de ser muito pesado e CHATO de escrever, esse método funciona.
 
 
 
-
-So instead of just naming the field types one after another and separating them with spaces, we use curly brackets. First we write the name of the field, for instance, [code]firstName[/code] and then we write a double colon [code]::[/code] (also called Paamayim Nekudotayim, haha) and then we specify the type. The resulting data type is exactly the same. The main benefit of this is that it creates functions that lookup fields in the data type. By using record syntax to create this data type, Haskell automatically made these functions: [code]firstName[/code], [code]lastName[/code], [code]age[/code], [code]height[/code], [code]phoneNumber[/code] and [code]flavor[/code].
-
+Deve existir uma maneira melhor, você deve estar pensando. Bem, não, não há. Desculpe.
 
 
-
-There's another benefit to using record syntax. When we derive [code]Show[/code] for the type, it displays it differently if we use record syntax to define and instantiate the type. Say we have a type that represents a car. We want to keep track of the company that made it, the model name and its year of production. Watch.
+Brincadeirinha, veja só. Hahaha! Os makers de Haskell são muito espertos e anteciparam esse cenário. Eles incluiram uma forma alternativa para escrever data types. Veja agora como nós podemos acalçar a mesma funcionalidade com record syntax.
 
 
 
-If we define it using record syntax, we can make a new car like this.
+Então, ao invés de apenas nomear os tipos de campo um após o outro e separando-os com espaços, nós usamos chaves. Primeiramente, nós escrevemos o nome do campo, por exemplo, e então nós escrevemos dois pontos, duas vezes [code]::[/code] (também chamado Paamayim Nekudotayim, haha), e então nós especificamos o tipo. O tipo de dado resultante é exatamente o mesmo. O maior benefício disto é que ele cria funções que que pesquisam campos no tipo de dado. Usando o record syntax para criar este tipo de dado, Haskell automaticamente cria essas funções:  [code]firstName[/code], [code]lastName[/code], [code]age[/code], [code]height[/code], [code]phoneNumber[/code] e [code]flavor[/code].
 
 
 
-When making a new car, we don't have to necessarily put the fields in the proper order, as long as we list all of them. But if we don't use record syntax, we have to specify them in order.
+Existe ainda outro benefício em usar record syntax. Quando derivamos [code]Show[/code] para seu tipo, ele exibe de forma diferente se nós usarmos record syntax para definir e instanciar o tipo. Digamos que nós temos um tipo que representa um carro. Nós queremos acompanhar a empresa que o fez, o nome do modelo e o seu ano de fabricação. Veja.
 
-Use record syntax when a constructor has several fields and it's not obvious which field is which. If we make a 3D vector data type by doing [code]data Vector = Vector Int Int Int[/code], it's pretty obvious that the fields are the components of a vector. However, in our [code]Person[/code] and [code]Car[/code] types, it wasn't so obvious and we greatly benefited from using record syntax.
+
+Se nós o definirmos usando record systax, nós podemos criar um novo carro dessa forma.
+
+
+
+Ao criar um novo carro, nós não necessariamente tempos que colocar os campos na ordem correta, enquanto nós listamos todos eles. Porém, se nós não usarmos record syntax, nós temos que especifica-los em ordem.
+
+Use record syntax quando um contrutor tem diversos tipos e não é óbio que campo é qual. Se nós fizéssemos um tipo de dado de vetor 3D fazendo [code]data Vector = Vector Int Int Int[/code], está perfeitamente claro que os campos são componentes no vetor. No entanto, nos nossos tipos [code]Person[/code] e [code]Car[/code], não está muito claro e nós seríamos muito beneficiados com o uso de record syntax.
+
