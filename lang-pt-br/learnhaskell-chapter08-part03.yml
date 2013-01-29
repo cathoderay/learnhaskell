@@ -1,20 +1,24 @@
 title: Type parameters
 
-text:  A value constructor can take some values parameters and then produce a new value. For instance, the [code]Car[/code] constructor takes three values and produces a car value. In a similar manner, <em>type constructors</em> can take types as parameters to produce new types. This might sound a bit too meta at first, but it's not that complicated. If you're familiar with templates in C++, you'll see some parallels. To get a clear picture of what type parameters work like in action, let's take a look at how a type we've already met is implemented.
+text:  Um construtor de valor pode receber alguns valores de parâmetro e então produzir um novo valor. Por exemplo, o construtor [code]Car[/code] recebe três valores e produz o valor car. De maneira similar, <em>type constructors</em> pode receber tipos como parâmetros para produzir um novo tipo. Isso pode soar um pouco estranho inicialmente, porém não é nada complicado. Se você é familiar com templates em C++, você vai perceber algumas semelhanças. Para obter uma imagem clara de como type parameters funcionam em ação, vamos dar uma olhada em como um tipo que já conhecemos é implementado.
 
 
 
-The [code]a[/code] here is the type parameter. And because there's a type parameter involved, we call [code]Maybe[/code] a type constructor. Depending on what we want this data type to hold when it's not [code]Nothing[/code], this type constructor can end up producing a type of [code]Maybe Int[/code], [code]Maybe Car[/code], [code]Maybe String[/code], etc. No value can have a type of just [code]Maybe[/code], because that's not a type per se, it's a type constructor. In order for this to be a real type that a value can be part of, it has to have all its type parameters filled up.
+A letra [code]a[/code] aqui é um type parameter. E, porque há um type parameter envolvido, nós chamamos  [code]Maybe[/code] como um construtor de tipo. Dependendo do que nós queremos que esse tipo de dado guarde quando ele não for  [code]Nothing[/code], esse construtor de tipo poderá acabar produzindo tipos como [code]Maybe Int[/code], [code]Maybe Car[/code], [code]Maybe String[/code], etc. Nenhum valor pode ter apenas o tipo [code]Maybe[/code], devido ao fato de que ele não é exatamente um tipo, ele é um construtor de tipos. A fim de que ele seja um tipo real de forma que um valor possa fazer parte dele, ele precisa que todos seus types parameters sejam preenchidos.
 
-So if we pass [code]Char[/code] as the type parameter to [code]Maybe[/code], we get a type of [code]Maybe Char[/code]. The value [code]Just 'a'[/code] has a type of [code]Maybe Char[/code], for example.
+Logo, se nós passarmos [code]Char[/code] como sendo o type parameter de [code]Maybe[/code], nós temos um tipo de [code]Maybe Char[/code]. O valor [code]Just 'a'[/code] tem o tipo de [code]Maybe Char[/code], por exemplo.
 
-You might not know it, but we used a type that has a type parameter before we used [code]Maybe[/code]. That type is the list type. Although there's some syntactic sugar in play, the list type takes a parameter to produce a concrete type. Values can have an [code][Int][/code] type, a [code][Char][/code] type, a [code][[String]][/code] type, but you can't have a value that just has a type of [code][][/code].
+Você pode não saber, porém nós usamos um tipo que tem um type parameter antes de usarmos [code]Maybe[/code]. Esse tipo é o tipo list. Embora haja um pouco de açúcar sintático em jogo, o tipo list recebe um parametro e produz um tipo concreto. Os valores podem ter o tipo  [code][Int][/code], ou o tipo [code][Char][/code], ou o tipo [code][[String]][/code], mas você não pode ter um valor cujo o tipo seja [code][][/code].
 
-Let's play around with the [code]Maybe[/code] type.
+Vamos brincar um pouco com o tipo [code]Maybe[/code].
 
 
 
-Type parameters are useful because we can make different types with them depending on what kind of types we want contained in our data type. When we do [code]:t Just "Haha"[/code], the type inference engine figures it out to be of the type [code]Maybe [Char][/code], because if the [code]a[/code] in the [code]Just a[/code] is a string, then the [code]a[/code] in [code]Maybe a[/code] must also be a string.
+Os type parameters são úteis pois nós podemos criar diferentes tipos com eles, dependendo da espécie de tipos nós queremos que contenha nos nossos dados. Quando nós fazemos [code]:t Just "Haha"[/code], o motor de inferência de tipos identifica-os como sendo do tipo [code]Maybe [Char][/code], devido ao fato de que o [code]a[/code] no [code]Just a[/code] é uma string, então o code]a[/code] no [code]Maybe a[/code] também deve ser uma string.
+
+
+
+
 
 Notice that the type of [code]Nothing[/code] is [code]Maybe a[/code]. Its type is polymorphic. If some function requires a [code]Maybe Int[/code] as a parameter, we can give it a [code]Nothing[/code], because a [code]Nothing[/code] doesn't contain a value anyway and so it doesn't matter. The [code]Maybe a[/code] type can act like a [code]Maybe Int[/code] if it has to, just like [code]5[/code] can act like an [code]Int[/code] or a [code]Double[/code]. Similarly, the type of the empty list is [code][a][/code]. An empty list can act like a list of anything. That's why we can do [code][1,2,3] ++ [][/code] and [code]["ha","ha","ha"] ++ [][/code].
 
