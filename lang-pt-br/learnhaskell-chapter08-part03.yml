@@ -19,38 +19,38 @@ Os type parameters são úteis pois nós podemos criar diferentes tipos com eles
 
 
 
+Perceba que o tipo de [code]Nothing[/code] é [code]Maybe a[/code]. Seu tipo é polimórfico. Se alguma função necessitar de um [code]Maybe Int[/code] como parâmetro, nós podemos lhe entregar um [code]Nothing[/code], uma vez que um [code]Nothing[/code] não contém nenhum valor de qualquer maneira. O tipo [code]Maybe a[/code] pode agir como um [code]Maybe Int[/code] se ele precisar, bem como [code]5[/code] pode agir como um [code]Int[/code] ou como um [code]Double[/code]. Similarmente, o tipo de uma lista vazia é [code][a][/code]. Uma lista vazia pode agir como uma list de qualquer coisa. Por isso é que nós podemos fazer[code][1,2,3] ++[][/code] e [code]["ha","ha","ha"] ++ [][/code].
 
-Notice that the type of [code]Nothing[/code] is [code]Maybe a[/code]. Its type is polymorphic. If some function requires a [code]Maybe Int[/code] as a parameter, we can give it a [code]Nothing[/code], because a [code]Nothing[/code] doesn't contain a value anyway and so it doesn't matter. The [code]Maybe a[/code] type can act like a [code]Maybe Int[/code] if it has to, just like [code]5[/code] can act like an [code]Int[/code] or a [code]Double[/code]. Similarly, the type of the empty list is [code][a][/code]. An empty list can act like a list of anything. That's why we can do [code][1,2,3] ++ [][/code] and [code]["ha","ha","ha"] ++ [][/code].
+Usar o type parameters é muito beneficial, mas somente quando seu uso faz sentido. Normalmente nós usamo-os quando nosso tipo de dados funciona indementemente do tipo do valor que ele guarda internamente, bem como nosso tipo [code]Maybe a[/code]. Se o nosso tipo age como uma espécie de caixa, é bom utiliza-lo. Nós podemos trocar nosso tipo de dados [code]Car[/code], de isto:
 
-Using type parameters is very beneficial, but only when using them makes sense. Usually we use them when our data type would work regardless of the type of the value it then holds inside it, like with our [code]Maybe a[/code] type. If our type acts as some kind of box, it's good to use them. We could change our [code]Car[/code] data type from this:
-
-
-
-To this:
+Para isto:
 
 
 
-But would we really benefit? The answer is: probably no, because we'd just end up defining functions that only work on the [code]Car String String Int[/code] type. For instance, given our first definition of [code]Car[/code], we could make a function that displays the car's properties in a nice little text.
+Mas será que nós realmente nos beneficiamos? A resposta é: provavelmente não, porque nós acabamos definindo funções que somente funcionam no tipo [code]Car String String Int[/code]. Por exemplo, dado a nova primeira definição de [code]Car[/code], nós podemos fazer uma função que exibe as propriedades do carro em um texto agradável.
 
 
 
-
-A cute little function! The type declaration is cute and it works nicely. Now what if [code]Car[/code] was [code]Car a b c[/code]?
-
-
-
-We'd have to force this function to take a [code]Car[/code] type of [code](Show a) =&gt; Car String String a[/code]. You can see that the type signature is more complicated and the only benefit we'd actually get would be that we can use any type that's an instance of the [code]Show[/code] typeclass as the type for [code]c[/code].
+Uma função bonitinha! A declaração de tipo é elegante e funciona satisfatoriamente. Agora, e se [code]Car[/code] fosse [code]Car a b c[/code]?
 
 
 
-In real life though, we'd end up using [code]Car String String Int[/code] most of the time and so it would seem that parameterizing the [code]Car[/code] type isn't really worth it. We usually use type parameters when the type that's contained inside the data type's various value constructors isn't really that important for the type to work. A list of stuff is a list of stuff and it doesn't matter what the type of that stuff is, it can still work. If we want to sum a list of numbers, we can specify later in the summing function that we specifically want a list of numbers. Same goes for [code]Maybe[/code]. [code]Maybe[/code] represents an option of either having nothing or having one of something. It doesn't matter what the type of that something is.
+Nós teríamos que forcar essa função a receber um [code]Car[/code] do tipo [code](Show a) =&gt; Car String String a[/code]. Você pode ver que o tipo de assinatura é mais complicada e o ´unico benefício que nós realmente teríamos seria que poderíamos usar qualquer tipo que seja uma instância do typeclass [code]Show[/code] como tipo de [code]c[/code].
 
-Another example of a parameterized type that we've already met is [code]Map k v[/code] from [code]Data.Map[/code]. The [code]k[/code] is the type of the keys in a map and the [code]v[/code] is the type of the values. This is a good example of where type parameters are very useful. Having maps parameterized enables us to have mappings from any type to any other type, as long as the type of the key is part of the [code]Ord[/code] typeclass. If we were defining a mapping type, we could add a typeclass constraint in the <i>data</i> declaration:
+
+
+Na vida real, porém, nós acabaríamos usando [code]Car String String Int[/code] na maior parte do tempo e assim parece que a parametrização do tipo [code]Car[/code] não vale realmente a pena. We usually use type parameters when the type that's contained inside the data type's various value constructors isn't really that important for the type to work. A lista de alguma coisa é uma lista de alguma coisa e não importa o tipo de coisa que é, isso continua funcionando. Se nós quisermos somar uma lista de números, poderíamos especificar mais tarde na função de soma que nós queremos especificamente uma lista de números. O mesmo acontece com [code]Maybe[/code]. [code]Maybe[/code] representa uma opção de não ter nada ou de ter alguma coisa. Não import a qualo tipo de coisa que é.
+
+
+Outro exemplo de tipo parametrizado que nós já havíamos conhecido é [code]Map k v[/code] de [code]Data.Map[/code]. O [code]k[/code] é o tipo das chaves em um mapa e o [code]v[/code] é o tipo dos valores. Este é um bom exemplo de como type parameters podem ser muito úteis. Ter mapas parametrizados nos habilita a ter mapas apartir de qualquer tipo para qualquer outro tipo, desde que o tipo da chave seja parte da typesclass [code]Ord[/code]. Se nós fôssemos definir um tipo mapa, nós poderíamos adicionar uma typeclass constraints na declaração de <i>data</i>:
 
 
 
 
-However, it's a very strong convention in Haskell to <em>never add typeclass constraints in data declarations. </em>Why? Well, because we don't benefit a lot, but we end up writing more class constraints, even when we don't need them. If we put or don't put the [code]Ord k[/code] constraint in the <i>data</i> declaration for [code]Map k v[/code], we're going to have to put the constraint into functions that assume the keys in a map can be ordered. But if we don't put the constraint in the data declaration, we don't have to put [code](Ord k) =&gt;[/code] in the type declarations of functions that don't care whether the keys can be ordered or not. An example of such a function is [code]toList[/code], that just takes a mapping and converts it to an associative list. Its type signature is [code]toList :: Map k a -&gt; [(k, a)][/code]. If [code]Map k v[/code] had a type constraint in its <i>data</i> declaration, the type for [code]toList[/code] would have to be [code]toList :: (Ord k) =&gt; Map k a -&gt; [(k, a)][/code], even though the function doesn't do any comparing of keys by order.
+No entanto, há uma convenção muito forte em Haskell para que <em>nunca se adicione uma typeclass constraints na declaradação de dados.</em>Porque? Bem, porque nós não nos beneficiamos muito, e nós acabamos escrevendo mais restrições de classes, mesmo quando não necessitamos delas.
+
+
+If we put or don't put the [code]Ord k[/code] constraint in the <i>data</i> declaration for [code]Map k v[/code], we're going to have to put the constraint into functions that assume the keys in a map can be ordered. But if we don't put the constraint in the data declaration, we don't have to put [code](Ord k) =&gt;[/code] in the type declarations of functions that don't care whether the keys can be ordered or not. An example of such a function is [code]toList[/code], that just takes a mapping and converts it to an associative list. Its type signature is [code]toList :: Map k a -&gt; [(k, a)][/code]. If [code]Map k v[/code] had a type constraint in its <i>data</i> declaration, the type for [code]toList[/code] would have to be [code]toList :: (Ord k) =&gt; Map k a -&gt; [(k, a)][/code], even though the function doesn't do any comparing of keys by order.
 
 So don't put type constraints into <i>data</i> declarations even if it seems to make sense, because you'll have to put them into the function type declarations either way.
 
