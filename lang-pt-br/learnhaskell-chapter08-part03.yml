@@ -50,11 +50,13 @@ Outro exemplo de tipo parametrizado que nós já havíamos conhecido é [code]Ma
 No entanto, há uma convenção muito forte em Haskell para que <em>nunca se adicione uma typeclass constraints na declaradação de dados.</em>Porque? Bem, porque nós não nos beneficiamos muito, e nós acabamos escrevendo mais restrições de classes, mesmo quando não necessitamos delas.
 
 
-If we put or don't put the [code]Ord k[/code] constraint in the <i>data</i> declaration for [code]Map k v[/code], we're going to have to put the constraint into functions that assume the keys in a map can be ordered. But if we don't put the constraint in the data declaration, we don't have to put [code](Ord k) =&gt;[/code] in the type declarations of functions that don't care whether the keys can be ordered or not. An example of such a function is [code]toList[/code], that just takes a mapping and converts it to an associative list. Its type signature is [code]toList :: Map k a -&gt; [(k, a)][/code]. If [code]Map k v[/code] had a type constraint in its <i>data</i> declaration, the type for [code]toList[/code] would have to be [code]toList :: (Ord k) =&gt; Map k a -&gt; [(k, a)][/code], even though the function doesn't do any comparing of keys by order.
+Se nós colocarmos ou não colocarmo a restrição [code]Ord k[/code] na declaração <i>data</i> de [code]Map k v[/code], nós teremos que colocar a restrição nas funções assumindo que as chaves em um map podem ser ordenadas. Porém, se nós não colocarmos a restrição na declaração de data, nós não temos que colocar [code](Ord k) =&gt;[/code] na declaração de tipos de funções que não se importam se as chaves devem ser ordenadas ou não. Um exemplo de uma função assim é a [code]toList[/code], que recebe um mapa e converte-o para uma lista associativa. O seu tipo de assinatura é [code]toList :: Map k a -&gt; [(k, a)][/code]. Se [code]Map k v[/code] tem uma restrição de tipo na sua declaração de <i>data</i>, o tipo [code]toList[/code] deve ser [code]toList :: (Ord k) =&gt; Map k a -&gt; [(k, a)][/code], mesmo embora que a função não faça nenhum tipo de comparação das chaves pela ordem.
 
-So don't put type constraints into <i>data</i> declarations even if it seems to make sense, because you'll have to put them into the function type declarations either way.
 
-Let's implement a 3D vector type and add some operations for it. We'll be using a parameterized type because even though it will usually contain numeric types, it will still support several of them.
+Logo, não coloque restrições de tipo nas declarações de <i>data</i> mesmo que pareça fazer sentido, porque você vai precisar coloca-las dentro da declaração do tipo da função de qualquer forma.
+
+Vamos implementar tipo vetor 3D e adicionar algumas operações nele. Nós vamos estar utilizar um tipo parametrizado porque apesar dele normalmente conter tipos numéricos, ele ainda deve suportar vários deles.
+
 
 
 
