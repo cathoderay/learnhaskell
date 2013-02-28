@@ -60,8 +60,8 @@ Status da Tradução
 - ``chapter07-part06``: Traduzido
 - ``chapter08``:  em tradução por @irio
 - ``chapter08-part02``: Traduzido
-- ``chapter08-part03``: em tradução por @gustavopinto
-- ``chapter08-part04``: em aberto
+- ``chapter08-part03``: Traduzido
+- ``chapter08-part04``: em tradução por @gustavopinto
 - ``chapter08-part05``: em aberto
 - ``chapter08-part06``: em aberto
 - ``chapter08-part07``: em aberto
