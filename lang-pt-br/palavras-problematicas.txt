@@ -23,7 +23,7 @@ max                                                     maior
 singleton                                               lista de um só elemento
 fibonacci number                                        número de fibonacci
 head (da lista)                                         cabeça
-tail (da lista)                                         calda
+tail (da lista)                                         cauda
 pattern matching                                        reconhecimento de padrões
 evaluate                                                avaliar em
 to zip                                                  mesclar / chamar "zip" em
